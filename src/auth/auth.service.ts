@@ -8,6 +8,7 @@ import { User } from 'src/schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Request, Response } from 'express';
 import { LoginDto } from './dto/login.dto';
+import { returnUserFields } from '../utils/return.user.fields';
 
 @Injectable()
 export class AuthService {
@@ -36,7 +37,7 @@ export class AuthService {
 
         this.setRefreshInCookies(res, tokens.refresh);
 
-        return { access: tokens.access, user: { name: doc.name, username: doc.username, id: doc.id } };
+        return { access: tokens.access, user: returnUserFields(doc) };
     }
 
     public async login(res: Response, dto: LoginDto) {
@@ -56,7 +57,7 @@ export class AuthService {
 
         this.setRefreshInCookies(res, tokens.refresh);
 
-        return { access: tokens.access, user: { name: user.name, id: user.id, username: user.username } };
+        return { access: tokens.access, user: returnUserFields(user) };
     }
 
     public async refresh(req: Request, res: Response) {
