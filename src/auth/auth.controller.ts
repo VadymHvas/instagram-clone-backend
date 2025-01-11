@@ -1,14 +1,4 @@
-import { 
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  Post,
-  Req,
-  Res,
-  UsePipes,
-  ValidationPipe
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { Request, Response } from 'express';
@@ -20,10 +10,7 @@ export class AuthController {
 
   @Post("register")
   @UsePipes(new ValidationPipe({ transform: true }))
-  public async register(
-    @Res({ passthrough: true }) res: Response,
-    @Body() dto: RegisterDto
-  ) {
+  public async register(@Res({ passthrough: true }) res: Response, @Body() dto: RegisterDto) {
     return await this.authService.register(res, dto);
   }
 
@@ -34,10 +21,7 @@ export class AuthController {
   }
 
   @Get("refresh")
-  public async refresh(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response
-  ) {
+  public async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     return await this.authService.refresh(req, res);
   }
 }

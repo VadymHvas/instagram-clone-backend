@@ -36,7 +36,7 @@ export class AuthService {
 
         this.setRefreshInCookies(res, tokens.refresh);
 
-        return { access: tokens.access };
+        return { access: tokens.access, user: { name: doc.name, username: doc.username, id: doc.id } };
     }
 
     public async login(res: Response, dto: LoginDto) {
@@ -56,7 +56,7 @@ export class AuthService {
 
         this.setRefreshInCookies(res, tokens.refresh);
 
-        return { access: tokens.access };
+        return { access: tokens.access, user: { name: user.name, id: user.id, username: user.username } };
     }
 
     public async refresh(req: Request, res: Response) {
